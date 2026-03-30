@@ -217,7 +217,7 @@ User Input
 
 ### Quick Start
 ```bash
-cd "/Users/michaelkoch/Desktop/PDF zu Epub Konverter"
+cd "PDF zu Epub Konverter"
 ./setup.sh      # First time only
 ./run_gui.sh    # Launch GUI
 ```

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-labelledby="title desc">
+  <title id="title">PDF to EPUB Converter</title>
+  <desc id="desc">Project logo placeholder</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="300" rx="36" fill="url(#bg)" />
+  <circle cx="125" cy="150" r="64" fill="#22d3ee" opacity="0.9" />
+  <text x="230" y="132" font-family="Arial, sans-serif" font-size="56" font-weight="700" fill="#ffffff">PDF to EPUB</text>
+  <text x="230" y="192" font-family="Arial, sans-serif" font-size="34" fill="#cbd5e1">Converter</text>
+</svg>

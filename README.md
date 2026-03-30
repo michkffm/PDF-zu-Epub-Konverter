@@ -1,5 +1,11 @@
 # PDF to EPUB Converter 📚
 
+<p align="center">
+    <span style="display:inline-block;background:#ffffff;padding:14px;border-radius:12px;">
+        <img src="assets/branding/logo.png" alt="PDF to EPUB Converter Logo" width="420">
+    </span>
+</p>
+
 A professional, feature-rich desktop application for converting PDF documents to EPUB3 e-book format.
 
 ## Features 🚀
@@ -149,6 +155,10 @@ Contributions are welcome! Feel free to submit issues or pull requests.
 ## License 📄
 
 MIT License - see LICENSE file for details
+
+## Copyright
+
+Copyright (c) Michael Koch 2026
 
 ## Roadmap 🗺️
 

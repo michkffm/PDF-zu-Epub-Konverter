@@ -1,176 +1,87 @@
-# PDF to EPUB Converter 📚
+# PDF to EPUB Converter
 
-<p align="center">
-    <span style="display:inline-block;background:#ffffff;padding:14px;border-radius:12px;">
-        <img src="assets/branding/logo.png" alt="PDF to EPUB Converter Logo" width="420">
-    </span>
-</p>
+A Python desktop application for turning digital and scanned PDFs into EPUB e-books. Select files, edit their metadata and run conversions from a PyQt6 interface.
 
-A professional, feature-rich desktop application for converting PDF documents to EPUB3 e-book format.
+**Python · PyQt6 · pdfplumber · Tesseract OCR · ebooklib · Pillow**
 
-## Features 🚀
+<p align="center"><img src="assets/branding/logo.png" alt="PDF to EPUB Converter logo" width="280"></p>
 
-- **Digital PDF Support**: Extract text, images, and metadata from text-based PDFs
-- **Scanned PDF Support**: OCR integration with Tesseract for scanned documents
-- **Batch Conversion**: Convert multiple PDFs in one operation
-- **Metadata Editing**: Edit title, author, language, cover image, and more
-- **EPUB Preview**: View converted EPUBs directly in the application
-- **Quality Reports**: Automatic validation and quality checks after conversion
-- **Cross-Platform**: Works on Windows, macOS, and Linux
+![Desktop interface with file list, metadata editor and conversion controls](docs/screenshot.png)
 
-## Tech Stack 🛠️
+## Implemented features
 
-- **Language**: Python 3.9+
-- **GUI Framework**: PyQt6
-- **PDF Processing**: pdfplumber (digital), PyPDF2 (fallback)
-- **OCR**: pytesseract + Tesseract-OCR
-- **EPUB Creation**: ebooklib
-- **Image Processing**: Pillow
+- Text and image extraction from digital PDFs, with a fallback extractor.
+- Optional OCR for scanned PDFs using Tesseract.
+- A file queue, editable title/author/language/description and output-folder selection.
+- Background conversion with progress messages and a conversion log.
+- Image optimization and EPUB generation.
+- Structural EPUB validation in the conversion worker.
 
-## Installation 💾
+This is a development project. Complex layouts, tables and reading order still need manual review in the resulting e-book. The built-in validator is not a replacement for external EPUB conformance testing. A command-line interface and an integrated EPUB reader are not provided by the current application entry point.
 
-### Prerequisites
+## Quick start
 
-1. **Python 3.9+**
-2. **Tesseract-OCR** (for scanned PDF support)
-   - **macOS**: `brew install tesseract`
-   - **Windows**: Download from [GitHub](https://github.com/UB-Mannheim/tesseract/wiki)
-   - **Linux**: `sudo apt-get install tesseract-ocr`
-
-### Setup
+The project declares Python 3.9 or newer. The checks below were run with an existing Python 3.14 environment on macOS; other platforms were not verified in this review. Install [Poetry](https://python-poetry.org/docs/#installation) and, for scanned documents, [Tesseract](https://tesseract-ocr.github.io/tessdoc/Installation.html) including the required language data.
 
 ```bash
-# Clone or download the repository
-cd "PDF zu Epub Konverter"
-
-# Install dependencies with Poetry
+git clone https://github.com/michkffm/PDF-zu-Epub-Konverter.git
+cd PDF-zu-Epub-Konverter
 poetry install --no-root
-
-# Activate virtual environment
-poetry shell
-```
-
-## Usage 🎯
-
-### Run the Application
-
-```bash
 poetry run python src/main.py
 ```
 
-### Command-Line Interface (Coming in Phase 3)
+Tesseract is optional for digital text-based PDFs. To inspect the OCR languages available on your system:
 
 ```bash
-pdf-epub-converter convert input.pdf -o output.epub
+tesseract --list-langs
 ```
 
-## Project Structure 📁
+## Using the application
 
-```
-src/
-├── main.py                          # Application entry point
-├── gui/                             # PyQt6 GUI components
-│   ├── main_window.py               # Main application window
-│   └── widgets/                     # UI widgets
-├── core/                            # Core conversion logic
-│   ├── pdf_extractor.py             # PDF text/image extraction
-│   ├── epub_builder.py              # EPUB document creation
-│   ├── metadata.py                  # Metadata management
-│   └── quality_checker.py           # EPUB validation
-├── workers/                         # Background thread workers
-│   └── conversion_worker.py         # Async conversion
-└── utils/                           # Utilities
-    ├── logger.py                    # Logging configuration
-    ├── config.py                    # App configuration
-    └── validators.py                # Input validation
+1. Add PDFs through the File menu and select an output folder.
+2. Review the metadata and conversion settings.
+3. Enable OCR only when needed and select an installed OCR language.
+4. Start conversion and follow the progress and log messages.
+5. Open the generated EPUB in an e-book reader to check the result.
 
-tests/                              # Unit and integration tests
-docs/                               # Documentation
-```
+The application processes documents locally. The normal launcher stores its diagnostic log under `~/.pdf_epub_converter/converter.log`; use non-confidential sample files when reporting issues and review logs before sharing them.
 
-## Development 🔧
+## Architecture
 
-### Phase 1: Foundation ✅ (In Progress)
-- [x] Project setup with Poetry
-- [x] Logging system
-- [x] Metadata manager
-- [x] Digital PDF extractor
-- [x] EPUB builder
-- [x] Basic unit tests
+| Location | Responsibility |
+| --- | --- |
+| `src/main.py` | Desktop application entry point |
+| `src/pdf_epub_converter/gui/` | PyQt6 window, metadata and settings |
+| `src/pdf_epub_converter/core/` | PDF extraction, metadata, EPUB creation and validation |
+| `src/pdf_epub_converter/workers/` | Background conversion and OCR |
+| `src/pdf_epub_converter/utils/` | Image optimization and logging |
+| `tests/` | Core, OCR and GUI tests |
 
-### Phase 2: Advanced PDF (In Progress)
-- [ ] OCR integration (Tesseract)
-- [ ] Image extraction and optimization
-- [ ] Layout analysis
-- [ ] Scanned PDF support
+The GUI delegates conversion work to a worker thread, allowing the interface to display progress while documents are processed.
 
-### Phase 3: GUI & User Interaction
-- [ ] PyQt6 main window
-- [ ] Drag-and-drop upload
-- [ ] Batch conversion
-- [ ] Metadata editor dialog
-- [ ] Progress tracking
+## Tests and verification
 
-### Phase 4: Preview & Quality
-- [ ] EPUB validator
-- [ ] HTML preview widget
-- [ ] Quality report generation
-
-### Phase 5: Integration & Polish
-- [ ] Config system
-- [ ] End-to-end workflows
-- [ ] Full error handling
-- [ ] Documentation
-- [ ] Packaging/Distribution
-
-## Testing 🧪
+Install the development extras and run the existing tests:
 
 ```bash
-# Run all tests
-poetry run pytest
-
-# Run specific test file
-poetry run pytest tests/test_phase1.py -v
-
-# Run with coverage
-poetry run pytest --cov=src tests/
+poetry install --no-root --extras dev
+poetry run pytest tests -q
 ```
 
-## Troubleshooting 🐛
+For GUI tests in an environment without a display:
 
-### Tesseract Not Found
-If you get "Tesseract not found" errors:
-- macOS: `brew install tesseract`
-- Check installation: `tesseract --version`
+```bash
+QT_QPA_PLATFORM=offscreen poetry run pytest tests -q
+```
 
-### PDF Extraction Issues
-- Try with a different PDF file to isolate the issue
-- Check PDF corruption: Open in Adobe Reader
-- For scanned PDFs, check if Tesseract is installed
+On 21 October 2026, **49 tests passed** using the existing Python environment and `QT_QPA_PLATFORM=offscreen`. The desktop window was also opened for the screenshot. These checks do not establish conversion quality for arbitrary real-world PDFs or compatibility with every operating system.
 
-## Contributing 🤝
+## Documentation status and license
 
-Contributions are welcome! Feel free to submit issues or pull requests.
+This README reflects the current source tree. Older phase reports and roadmap documents remain historical development notes and may differ from the implementation.
 
-## License 📄
+The previous project description identifies the license as MIT; a separate `LICENSE` file is not currently included in this repository.
 
-MIT License - see LICENSE file for details
+Copyright © Michael Koch 2026.
 
-## Copyright
-
-Copyright (c) Michael Koch 2026
-
-## Roadmap 🗺️
-
-- [ ] v0.2: Scanned PDF + OCR support
-- [ ] v0.3: Full GUI implementation
-- [ ] v0.4: Quality checks & preview
-- [ ] v1.0: Production release with all features
-
-## Contact 📧
-
-maintainer: michkffm (michael.koch@vodafone.de)
-
----
-
-**Status**: Phase 1 Foundation - Core modules implemented, testing in progress
+[GitHub profile](https://github.com/michkffm) · [Interactive portfolio](https://michael-koch-portfolio.onrender.com/)

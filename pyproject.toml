@@ -5,16 +5,14 @@ description = "Professional PDF to EPUB converter with OCR support"
 authors = [
     {name = "michkffm", email = "michael.koch@vodafone.de"}
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 dependencies = [
-    "pdfplumber>=0.10.0",
-    "PyPDF2>=3.0.0",
+    "pdfplumber>=0.11.9",
     "pytesseract>=0.3.10",
-    "Pillow>=10.0.0",
+    "Pillow>=13.0.0",
     "ebooklib>=0.18.0",
-    "lxml>=4.9.0",
+    "lxml>=6.1.0",
     "PyQt6>=6.6.0",
-    "python-dotenv>=1.0.0",
 ]
 
 [tool.poetry]
@@ -24,9 +22,9 @@ packages = [
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7.0.0",
+    "pytest>=9.0.3",
     "pytest-cov>=4.0.0",
-    "black>=23.0.0",
+    "black>=26.10.1",
     "flake8>=6.0.0",
     "mypy>=1.0.0",
 ]

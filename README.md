@@ -4,6 +4,8 @@
 
 Eine lokale Desktop-Anwendung: PDFs auswählen, Metadaten bearbeiten und als EPUB speichern. Digitale Dokumente und gescannte Seiten werden unterstützt.
 
+[Projektseite ansehen](https://michkffm.github.io/PDF-zu-Epub-Konverter/)
+
 **Python · PyQt6 · pdfplumber · Tesseract · ebooklib · Pillow**
 
 ![Desktop-Oberfläche](docs/screenshot.png)

@@ -1,29 +1,50 @@
+<div align="center">
+
+<img src="assets/branding/logo.png" alt="PDF zu EPUB Konverter" width="200">
+
 # PDF → EPUB Konverter
 
-<p align="center"><img src="assets/branding/logo.png" alt="PDF zu EPUB Konverter" width="220"></p>
+### Dein Dokument. Dein Lesefluss.
 
-Eine lokale Desktop-Anwendung: PDFs auswählen, Metadaten bearbeiten und als EPUB speichern. Digitale Dokumente und gescannte Seiten werden unterstützt.
+PDFs lokal in flexible E-Books verwandeln – mit Texterkennung, Metadaten-Editor und einer übersichtlichen Desktop-Oberfläche.
 
-[Projektseite ansehen](https://michkffm.github.io/PDF-zu-Epub-Konverter/)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
+[![PyQt6 Desktop](https://img.shields.io/badge/Oberfl%C3%A4che-PyQt6-174C40)](#funktionen)
+[![Lokale Verarbeitung](https://img.shields.io/badge/Verarbeitung-lokal-174C40)](#sicherheit-und-lokale-daten)
 
-**Python · PyQt6 · pdfplumber · Tesseract · ebooklib · Pillow**
+**[Projektseite ansehen ↗](https://michkffm.github.io/PDF-zu-Epub-Konverter/)** · [Schnellstart](#installation) · [Bedienungsanleitung](USER_GUIDE.md) · [Fehler melden](https://github.com/michkffm/PDF-zu-Epub-Konverter/issues)
 
-![Desktop-Oberfläche](docs/screenshot.png)
+</div>
+
+---
+
+> **Desktop-Anwendung:** Deine PDFs werden auf deinem Rechner verarbeitet. Die Projektseite erklärt das Programm; sie bietet keinen Online-Upload oder Browser-Konverter.
+
+## Einblick
+
+![Desktop-Anwendung mit Dateiliste, Metadaten-Editor und Konvertierungsfortschritt](docs/screenshot.png)
+
+*Der Screenshot zeigt einen früheren Oberflächenstand. Warteschlange und Ordnerauswahl wurden inzwischen überarbeitet.*
 
 ## Funktionen
 
-- Mehrere PDFs nacheinander konvertieren, mit Fortschritt und abbrechbarer Warteschlange.
-- Titel, Autor, Sprache und Beschreibung pro Datei bearbeiten.
-- Ausgabeordner auswählen; vorhandene Bücher bleiben erhalten, neue Dateien bekommen bei Bedarf einen nummerierten Namen.
-- OCR deaktivieren, für textlose Seiten automatisch einschalten oder für alle Seiten erzwingen.
-- Bilder extrahieren, optional komprimieren und in einem eigenen Illustrationskapitel anzeigen.
-- EPUB-Struktur vor der Veröffentlichung der Ausgabedatei prüfen.
+| Funktion | Was du damit machen kannst |
+| --- | --- |
+| **PDF → EPUB** | Textbasierte PDFs in E-Books mit anpassbarem Textfluss umwandeln. |
+| **Texterkennung / OCR** | Gescannte Seiten mit Tesseract lesen: automatisch für textlose Seiten oder ausdrücklich für alle Seiten. |
+| **Warteschlange** | Mehrere Dateien nacheinander verarbeiten und bei Bedarf abbrechen. |
+| **Metadaten-Editor** | Titel, Autor, Sprache und Beschreibung pro Datei festlegen. |
+| **Bilder** | Illustrationen extrahieren, optional komprimieren und in einem eigenen Kapitel anzeigen. |
+| **Geschützte Ausgabe** | Ausgabeordner wählen und bestehende EPUBs durch nummerierte Dateinamen erhalten. |
+| **Strukturprüfung** | Grundstruktur und XML des erzeugten EPUBs vor der Ausgabe prüfen. |
 
 PDFs haben feste Seitenlayouts. Das Ergebnis ist ein neu fließendes E-Book, keine originalgetreue Kopie. Tabellen, Spalten, Formeln und die genaue Position von Bildern können abweichen. Kapitel werden nach Textlänge aufgeteilt; eine semantische Kapitelerkennung ist nicht implementiert. Der integrierte Strukturprüfer ersetzt keine vollständige EPUBCheck-Prüfung.
 
 ## Installation
 
-Voraussetzungen: **Python 3.11 oder neuer** und [Poetry](https://python-poetry.org/docs/#installation). Getestet wird lokal mit Python 3.14 auf macOS. Windows und Linux sind durch den verwendeten Stack grundsätzlich möglich, aber noch nicht manuell abgenommen.
+Du brauchst **Python 3.11 oder neuer**, [Poetry](https://python-poetry.org/docs/#installation) und Git für den folgenden Schnellstart. Tesseract ist nur für gescannte Dokumente erforderlich.
+
+### In vier Befehlen starten
 
 ```bash
 git clone https://github.com/michkffm/PDF-zu-Epub-Konverter.git
@@ -63,6 +84,15 @@ Unter Windows Tesseract nach der verlinkten Anleitung installieren und sein Verz
 
 Ein fehlgeschlagener Auftrag wird protokolliert; die nächste Datei wird trotzdem versucht. Erfolgreiche Dateien verschwinden aus der Liste, fehlgeschlagene bleiben zur erneuten Bearbeitung stehen.
 
+## Plattformen
+
+| Plattform | Aktueller Prüfstand |
+| --- | --- |
+| **macOS** | Automatisierte GUI-Tests und echte Text-/Scan-Konvertierungen mit Python 3.14 erfolgreich geprüft. |
+| **Windows** | Durch Python und PyQt grundsätzlich möglich; Installation und Laufzeit noch nicht praktisch abgenommen. |
+| **Linux** | Durch Python und PyQt grundsätzlich möglich; Installation und Laufzeit noch nicht praktisch abgenommen. |
+| **Browser / Smartphone** | Keine entsprechende Konverter-Anwendung enthalten. |
+
 ## Sicherheit und lokale Daten
 
 - PDF-/OCR-Text wird als Klartext in XHTML eingebettet. Tags aus PDFs werden nicht als aktive Buchinhalte übernommen.
@@ -72,18 +102,33 @@ Ein fehlgeschlagener Auftrag wird protokolliert; die nächste Datei wird trotzde
 - Bestehende EPUBs werden weder von der Oberfläche noch vom direkten Schreibpfad überschrieben.
 - Die Anwendung lädt keine PDFs hoch. Lokale Diagnosemeldungen können Dateinamen und Metadaten enthalten: `~/.pdf_epub_converter/converter.log`. Vor dem Teilen prüfen.
 
-## Tests
+## Entwicklung und Prüfungen
+
+Der Stack besteht aus **Python, PyQt6, pdfplumber, pytesseract, Pillow, ebooklib und lxml**. Die Python-Abhängigkeiten werden mit Poetry und `poetry.lock` verwaltet.
+
+### Prüfungen ausführen
 
 ```bash
 poetry install --extras dev
 poetry run pytest tests -q
 poetry run flake8 src --select=F401,F811,F821
 poetry check --lock
+poetry build
 ```
 
 Ohne Bildschirm für GUI-Tests: `QT_QPA_PLATFORM=offscreen poetry run pytest tests -q`.
 
-Am 23. Oktober 2026 bestanden unter macOS/Python 3.14 alle **73 Tests**, einschließlich englischer OCR-Integration. Wheel und Quellpaket wurden gebaut. Der Paketabgleich mit `pip-audit` meldete für die synchronisierte Umgebung keine bekannten Schwachstellen.
+### Zuletzt verifiziert · 23. Oktober 2026
+
+| Prüfung | Ergebnis |
+| --- | --- |
+| Tests unter macOS / Python 3.14 | **73 bestanden**, einschließlich englischer OCR-Integration |
+| Gezielte Import- und Namensprüfung (`F401`, `F811`, `F821`) | Keine Befunde |
+| Poetry-Konfiguration und Lockdatei | Erfolgreich geprüft |
+| Paketbau | Wheel und Quellpaket erfolgreich erzeugt |
+| Paketabgleich mit `pip-audit` | Keine bekannten Schwachstellen in der geprüften, synchronisierten Umgebung |
+
+Diese Ergebnisse dokumentieren den genannten Prüfstand; sie sind kein automatisch aktualisierter CI-Status und keine Garantie für beliebige PDFs oder alle Betriebssysteme.
 
 Die Regressionstests prüfen unter anderem tatsächliche Text-/Scan-Konvertierung, eingebundene Bilder, harmlose Ausgabe von HTML-Zeichen, Schutz vorhandener Bücher, Validierungsfehler, Abbruch, Renderlimits und mehrteilige Warteschlangen. OCR-Integrationstests werden bei fehlendem Tesseract/englischen Sprachdaten übersprungen; für vollständige Prüfung `eng` installieren.
 
@@ -98,12 +143,29 @@ Die Regressionstests prüfen unter anderem tatsächliche Text-/Scan-Konvertierun
 | `src/pdf_epub_converter/utils/` | Bildoptimierung und Logging |
 | `tests/` | Modul- und Regressionstests |
 
-## Hosting und Projektstatus
+## Projektseite und Dokumentation
 
-Die Anwendung ist ein Desktop-Programm. Eine Projekt-/Downloadseite kann auf GitHub Pages veröffentlicht werden; der Konverter selbst läuft dort nicht. Eine Browserversion benötigt eine eigene Weboberfläche und einen abgesicherten Python-Dienst mit Upload-/Auftragslimits und Dateibereinigung. Eine solche Version ist hier nicht enthalten.
+Die **[Projektseite auf GitHub Pages](https://michkffm.github.io/PDF-zu-Epub-Konverter/)** ist veröffentlicht. Sie stellt Funktionen, Installation und Plattformen vor und verlinkt den Quellcode. Die Website liegt unter `docs/` und wird aus `main` veröffentlicht.
 
-[Kurzanleitung](QUICK_START.md) · [Bedienung](USER_GUIDE.md)
+| Anlaufstelle | Inhalt |
+| --- | --- |
+| [Projektseite](https://michkffm.github.io/PDF-zu-Epub-Konverter/) | Überblick und Einstieg |
+| [Kurzanleitung](QUICK_START.md) | Installation und erster Start |
+| [Bedienungsanleitung](USER_GUIDE.md) | Einstellungen, Ablauf und Ergebnisprüfung |
+| [GitHub Issues](https://github.com/michkffm/PDF-zu-Epub-Konverter/issues) | Fehler und Verbesserungsvorschläge |
 
-Die Phasenberichte und `FINAL_PROJECT_SUMMARY.md` sind historische Entwicklungsnotizen; für den aktuellen Funktionsumfang gilt dieses README. Der Screenshot zeigt einen älteren Oberflächenstand.
+Eine Browserversion des Konverters ist nicht enthalten. Dafür wären eine Weboberfläche und ein abgesicherter Python-Dienst erforderlich.
 
-Im früheren Projekttext wurde MIT als Lizenz genannt; eine separate Lizenzdatei liegt derzeit nicht vor.
+Die Phasenberichte und `FINAL_PROJECT_SUMMARY.md` bleiben historische Entwicklungsnotizen; für den aktuellen Funktionsumfang gilt dieses README.
+
+## Lizenzstatus
+
+Im früheren Projekttext wurde MIT genannt. Eine separate `LICENSE`-Datei liegt derzeit nicht vor; deshalb wird hier keine abgeschlossene Lizenzierung behauptet.
+
+---
+
+<div align="center">
+
+Ein Projekt von **[Michael Koch](https://github.com/michkffm)** · Mit Python entwickelt, für den eigenen Lesefluss gemacht.
+
+</div>
